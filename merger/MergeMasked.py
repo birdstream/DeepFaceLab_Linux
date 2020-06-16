@@ -223,8 +223,7 @@ def MergeMaskedFace (predictor_func, predictor_input_shape,
                         s_maskx, s_masky = int(l+w/2), int(t+h/2)
                         
                         #fix for linux
-                        if not is_windows:
-                            out_img = np.nan_to_num(out_img)
+                        out_img = np.nan_to_num(out_img)
                             
                         out_img = cv2.seamlessClone( (out_img*255).astype(np.uint8), img_bgr_uint8, (img_face_seamless_mask_a*255).astype(np.uint8), (s_maskx,s_masky) , cv2.NORMAL_CLONE )
                         out_img = out_img.astype(dtype=np.float32) / 255.0
@@ -240,10 +239,9 @@ def MergeMaskedFace (predictor_func, predictor_input_shape,
                 cfg_mp = cfg.motion_blur_power / 100.0
                 
                 img_face_mask_a = np.nan_to_num(img_face_mask_a)
-                if not is_windows:
-                    # linux opencv can produce nan's so there will be errors in multiplying and glitches in videos
-                    img_bgr = np.nan_to_num(img_bgr)
-                    out_img = np.nan_to_num(out_img)
+                # linux opencv can produce nan's so there will be errors in multiplying and glitches in videos
+                img_bgr = np.nan_to_num(img_bgr)
+                out_img = np.nan_to_num(out_img)
 
                 out_img = img_bgr*(1-img_face_mask_a) + (out_img*img_face_mask_a)
 
@@ -310,8 +308,7 @@ def MergeMaskedFace (predictor_func, predictor_input_shape,
                     new_out = cv2.warpAffine( out_face_bgr, face_mat, img_size, np.empty_like(img_bgr), cv2.WARP_INVERSE_MAP | cv2.INTER_CUBIC, cv2.BORDER_TRANSPARENT )
                     
                     #fix for linux
-                    if not is_windows:
-                        new_out = np.nan_to_num(new_out)
+                    new_out = np.nan_to_num(new_out)
                         
                     out_img =  np.clip( img_bgr*(1-img_face_mask_a) + (new_out*img_face_mask_a) , 0, 1.0 )
 
