@@ -269,7 +269,7 @@ class InteractBase(object):
             s += " ("
 
         if valid_range is not None:
-            s += f" {valid_range[0]}-{valid_range[1]} "
+            s += f" {valid_range[0]}-{valid_range[1]}"
 
         if add_info is not None:
             s += f" {add_info}"
@@ -296,7 +296,7 @@ class InteractBase(object):
 
                 i = int(inp)
                 if valid_range is not None:
-                    i = np.clip(i, valid_range[0], valid_range[1])
+                    i = int(np.clip(i, valid_range[0], valid_range[1]))
 
                 if (valid_list is not None) and (i not in valid_list):
                     i = default_value
